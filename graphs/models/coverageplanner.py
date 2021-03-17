@@ -7,7 +7,7 @@ import utils.graphUtils.graphML as gml
 import utils.graphUtils.graphTools
 from torchsummaryX import summary
 
-class DecentralPlannerNet(nn.Module):
+class CoveragePlannerNet(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.config = config
