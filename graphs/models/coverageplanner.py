@@ -15,10 +15,10 @@ class CoveragePlannerNet(nn.Module):
         self.numAgents = self.config.num_agents
         # inW = self.config.map_w
         # inH = self.config.map_h
-
+        numFeatures = ( self.config.tgt_feat + self.config.rbt_feat ) * 2
         numAction = 5
         # ------------------ DCP v1.5  -  no CNN- less feature
-        dimCompressMLP = 1
+        dimCompressMLP = 2
         numCompressFeatures = [2 ** 4, 2 ** 3]
         # # 1 layer origin
         dimNodeSignals = [2 ** 4]
@@ -26,7 +26,7 @@ class CoveragePlannerNet(nn.Module):
         
         nGraphFilterTaps = [self.config.nGraphFilterTaps]
         # --- actionMLP
-        dimActionMLP = 2
+        dimActionMLP = 1
         numActionFeatures = [numAction]
 
 
