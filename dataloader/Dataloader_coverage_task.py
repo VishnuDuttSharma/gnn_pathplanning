@@ -53,8 +53,12 @@ def generate_data(data_size):
 
         feat_list.append(feat_vec)
         adj_list.append(adj_mat)
-        label_list.append(action_vec)
+        
+        action_one_hot = np.zeros((NUM_ROBOT, len(DIR_LIST)), dtype=np.uint8)
+        action_one_hot[np.arange(NUM_ROBOT), action_vec] = 1
+        label_list.append(action_one_hot)
     
-    return [np.array(feat_list).shape, np.array(adj_list).shape, np.array(label_list).shape]
+    return [np.array(feat_list), np.array(adj_list), np.array(label_list)]
+
 
  
