@@ -19,7 +19,7 @@ from utils.multirobotsim_dcenlocal import multiRobotSim
 
 # from dataloader.decentralplanner_local import DecentralPlannerDataLoader
 # from dataloader.decentralplanner_nonTFlocal import DecentralPlannerDataLoader
-from dataloader.Dataloader_coverage_task import GNNCoverageDataset
+from dataloader.Dataloader_coverage_task import GNNCoverageDataLoader
 
 # whether to use skip connection for feature before and after GNN
 
@@ -47,7 +47,7 @@ class CoveragePlannerAgentLocal(BaseAgent):
         self.logger.info("Model: \n".format(print(self.model)))
 
         # define data_loader
-        self.data_loader = GNNCoverageDataset(config=config)
+        self.data_loader = GNNCoverageDataLoader(config=config)
 
         # define loss
         self.loss = CrossEntropyLoss()
@@ -283,7 +283,7 @@ class CoveragePlannerAgentLocal(BaseAgent):
         # for param in self.model.parameters():
         #     print(param.requires_grad)
         # for batch_idx, (input, target, GSO) in enumerate(self.data_loader.train_loader):
-        for batch_idx, (batch_input, batch_target, _, batch_GSO, _) in enumerate(self.data_loader.train_loader):
+        for batch_idx, (batch_input, batch_GSO, batch_target) in enumerate(self.data_loader.train_loader):
 
             inputGPU = batch_input.to(self.config.device)
             gsoGPU = batch_GSO.to(self.config.device)
@@ -298,6 +298,7 @@ class CoveragePlannerAgentLocal(BaseAgent):
             # model
 
             self.model.addGSO(gsoGPU)
+            # print(inputGPU.shape)
             predict = self.model(inputGPU)
 
 
@@ -337,7 +338,7 @@ class CoveragePlannerAgentLocal(BaseAgent):
         seq_length = 10
         # for batch_idx, (input, target, GSO) in enumerate(self.data_loader.train_loader):
         # for batch_idx, (batch_input, batch_GSO, batch_target) in enumerate(self.data_loader.train_loader):
-        for batch_idx, (batch_input, batch_target, list_makespan, batch_GSO, _) in enumerate(self.data_loader.train_loader):
+        for batch_idx, (batch_input, batch_GSO, batch_target, list_makespan) in enumerate(self.data_loader.train_loader):
 
             batch_makespan = max(list_makespan)
 
@@ -437,7 +438,7 @@ class CoveragePlannerAgentLocal(BaseAgent):
         self.model.eval()
 
         log_loss_validStep = []
-        for batch_idx, (batch_input, batch_target, _, batch_GSO, _) in enumerate(self.data_loader.validStep_loader):
+        for batch_idx, (batch_input, batch_GSO, batch_target) in enumerate(self.data_loader.validStep_loader):
 
             inputGPU = batch_input.to(self.config.device)
             gsoGPU = batch_GSO.to(self.config.device)
