@@ -1,9 +1,9 @@
 {
   "exp_net": "dcpOE",
-  "agent": "GNNCoveragePlanner",
-  "data_loader": "GNNCoverageDataset",
+  "agent": "CoveragePlannerAgentLocal",
+  "data_loader": "GNNCoverageDataLoader",
 
-  "data_root": "/local/scratch/ql295/Data/MultiAgentDataset/DataSource_DMap/",
+  "data_root": "/content/drive/MyDrive/Research/multi_robot/gnn_data/",
   "save_data": "/local/scratch/ql295/Data/MultiAgentDataset/",
   "save_tb_data": "/local/scratch/ql295/Data/MultiAgentDataset/Tensorboard_CG50/",
 
@@ -12,6 +12,8 @@
   "map_density": 1,
   "num_agents": 10,
   "id_map": 0,
+  "tgt_feat": 10,
+  "rbt_feat": 10,
 
   "trained_map_w": 20,
   "trained_map_h": 20,
