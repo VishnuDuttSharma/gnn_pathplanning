@@ -15,7 +15,7 @@ class CoveragePlannerNet(nn.Module):
         self.numAgents = self.config.num_agents
         # inW = self.config.map_w
         # inH = self.config.map_h
-        numFeatures = ( self.config.tgt_feat + self.config.rbt_feat ) * 2
+        numFeatures = (self.tgt_feat + self.rbt_feat)*2
         numAction = 5
         # ------------------ DCP v1.5  -  no CNN- less feature
         dimCompressMLP = 2
@@ -136,10 +136,11 @@ class CoveragePlannerNet(nn.Module):
         extractFeatureMap = torch.zeros(B, self.numFeatures2Share, self.numAgents).to(self.config.device)
         for id_agent in range(self.numAgents):
             input_currentAgent = inputTensor[:, id_agent]
-            featureMap = self.ConvLayers(input_currentAgent)
-            featureMapFlatten = featureMap.view(featureMap.size(0), -1)
+            # featureMap = self.ConvLayers(input_currentAgent)
+            # featureMapFlatten = featureMap.view(featureMap.size(0), -1)
             # extractFeatureMap[:, :, id_agent] = featureMapFlatten
-            compressfeature = self.compressMLP(featureMapFlatten)
+            # compressfeature = self.compressMLP(featureMapFlatten)
+            compressfeature = self.compressMLP(input_currentAgent)
             extractFeatureMap[:, :, id_agent] = compressfeature # B x F x N
 
         # DCP
